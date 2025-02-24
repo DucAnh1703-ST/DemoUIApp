@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -16,10 +17,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
 import com.example.demodatabase.IMyMySchoolInterface
 import com.example.demouiapp.navigation.NavigationGraph
 import com.example.demouiapp.ui.theme.DemoUIAppTheme
+import com.example.demouiapp.viewmodel.StudentViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,14 +31,15 @@ import kotlinx.coroutines.withContext
 class MainActivity : ComponentActivity() {
 
     private var aidl: IMyMySchoolInterface? = null
+    private val studentViewModel: StudentViewModel by viewModels()
 
     private val serviceConnection = object : ServiceConnection {
-
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             if (service != null) {
                 aidl = IMyMySchoolInterface.Stub.asInterface(service)
                 Log.d("MainActivity B", "onServiceConnected")
-                Log.d("MainActivity B", "Service connected -> (student first full): ${aidl?.first100Students?.firstOrNull()  ?: "null"}")
+                // Truyền aidl cho ViewModel khi service được kết nối
+                studentViewModel.setAidl(aidl)
             } else {
                 Log.d("MainActivity B", "Service is null")
             }
@@ -44,7 +48,6 @@ class MainActivity : ComponentActivity() {
         override fun onServiceDisconnected(name: ComponentName?) {
             aidl = null
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,13 +58,11 @@ class MainActivity : ComponentActivity() {
             bindServiceInBackground()
         }
 
-
-
         enableEdgeToEdge()
         setContent {
             DemoUIAppTheme {
                 val navController = rememberNavController()
-                NavigationGraph(navController = navController)
+                NavigationGraph(navController = navController, studentViewModel = studentViewModel)
             }
         }
     }
@@ -75,7 +76,7 @@ class MainActivity : ComponentActivity() {
             if (isBound) {
                 Log.d("MainActivity B", "bindService OK")
             } else {
-                Log.d("MainActivity B", "bindService Khong duoc")
+                Log.d("MainActivity B", "bindService failed")
             }
         }
     }
@@ -85,3 +86,5 @@ class MainActivity : ComponentActivity() {
         super.onDestroy()
     }
 }
+
+
