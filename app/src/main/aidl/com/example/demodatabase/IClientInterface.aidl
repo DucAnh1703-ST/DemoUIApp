@@ -10,7 +10,6 @@ import java.util.List;
 parcelable Student;
 parcelable Subject;
 
-interface IMyMySchoolInterface {
+interface IClientInterface {
     List<Student> getFirst100Students();
-    List<Student> getTop10StudentsBySubject(String nameSubject);
 }

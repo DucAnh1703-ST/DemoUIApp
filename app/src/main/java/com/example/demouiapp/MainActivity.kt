@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
 
     private suspend fun bindServiceInBackground() {
         withContext(Dispatchers.IO) {
-            val intent = Intent("com.example.demodatabase.IAidlDatabaseService")
+            val intent = Intent("com.example.demodatabase.IMyMySchoolInterface")
             intent.setPackage("com.example.demodatabase")
 
             val isBound = bindService(intent, serviceConnection, BIND_AUTO_CREATE)
