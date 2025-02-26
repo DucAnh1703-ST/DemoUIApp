@@ -1,4 +1,4 @@
-package com.example.demouiapp.service
+package com.example.demouiapp
 
 import android.app.Service
 import android.content.ComponentName
@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import android.util.Log
+import com.example.demodatabase.IClientInterface
 import com.example.demodatabase.IMyMySchoolInterface
 import com.example.demodatabase.Student
 
@@ -29,15 +30,15 @@ class MyUIService : Service() {
         }
     }
 
-    private val binder = object :IMyMySchoolInterface.Stub(){
+    private val binder = object : IClientInterface.Stub(){
         override fun getFirst100Students(): List<Student> {
             return aidlDatabase?.first100Students?.toList() ?: listOf()
         }
 
-        override fun getTop10StudentsBySubject(nameSubject: String?): List<Student> {
-            return listOf()
-            // TODO
-        }
+//        override fun getTop10StudentsBySubject(nameSubject: String?): List<Student> {
+//            return listOf()
+//            // TODO
+//        }
 
     }
 

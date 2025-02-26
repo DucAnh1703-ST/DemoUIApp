@@ -33,15 +33,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.demouiapp.viewmodel.StudentViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ScreenB(navController: NavController) {
-    // Cấu hình giao diện cho màn hình E với TopAppBar chứa nút back
+    // Khai báo danh sách các môn học
+    val subjects = listOf(
+        "Math", "Physics", "Chemistry", "Biology", "Literature",
+        "History", "Geography", "English", "Physical Education", "Music"
+    )
+
+    var selectedSubject by remember { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -62,14 +74,77 @@ fun ScreenB(navController: NavController) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 56.dp), // Để tránh bị che bởi TopAppBar
+                    .padding(top = 0.dp), // Để tránh bị che bởi TopAppBar
                 contentAlignment = Alignment.Center
             ) {
-                Text("This is Screen B")
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("Top 10 Student by Subject", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+
+                    Box(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(text = "Subject: ", fontSize = 15.sp, fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth().padding(16.dp))
+                    }
+
+                    // Dropdown list
+                    ExposedDropdownMenuBox(
+                        expanded = expanded,
+                        onExpandedChange = { expanded = it },
+                    ) {
+                        TextField(
+                            value = selectedSubject,
+                            onValueChange = {},
+                            label = { Text("Select a subject") },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                                .menuAnchor(),
+                            readOnly = true,
+                            trailingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.ArrowDropDown,
+                                    contentDescription = "Dropdown Arrow"
+                                )
+                            }
+                        )
+
+                        ExposedDropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false }
+                        ) {
+                            subjects.forEach { subject ->
+                                DropdownMenuItem(
+                                    text = {Text(subject)}, onClick = {
+                                    selectedSubject = subject
+                                    expanded = false
+                                })
+                            }
+                        }
+                    }
+
+                    // Thêm Button Search
+                    Button(
+                        onClick = {
+                            // Điều hướng tới màn hình mới "ScreenBExtra"
+                            navController.navigate("screen_b_extra")
+                        },
+                        modifier = Modifier.fillMaxWidth().padding(16.dp)
+                    ) {
+                        Text("Search")
+                    }
+                }
             }
         }
     )
 }
+
+//@Preview
+//@Composable
+//fun PreviewScreenB() {
+//    // A mock NavController for preview purposes
+//    val navController = rememberNavController()
+//    ScreenB(navController = navController)
+//}
 
 
 

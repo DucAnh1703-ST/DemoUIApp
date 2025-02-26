@@ -22,7 +22,7 @@
         android:theme="@style/Theme.DemoUIApp"
         tools:targetApi="31">
         <service
-            android:name=".service.MyUIService"
+            android:name=".MyUIService"
             android:enabled="true"
             android:exported="true"
             android:permission="com.example.permission.ACCESS">
