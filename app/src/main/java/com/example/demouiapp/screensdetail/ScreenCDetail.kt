@@ -1,4 +1,4 @@
-package com.example.demouiapp.screens
+package com.example.demouiapp.screensdetail
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
@@ -35,24 +35,25 @@ import androidx.navigation.NavController
 import com.example.demodatabase.IMyMySchoolInterface
 import com.example.demodatabase.Student
 
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScreenA(navController: NavController, aidl: IMyMySchoolInterface?) {
+fun ScreenCDetail(navController: NavController, aidl: IMyMySchoolInterface?, city: String) {
 
     var students by remember { mutableStateOf(emptyList<Student>()) }
 
     var openDialog by remember { mutableStateOf(false) }
     var selectedStudent by remember { mutableStateOf<Student?>(null) }
 
+    // Lọc sinh viên theo môn học khi ScreenBDetail được tạo
     LaunchedEffect(Unit) {
-        students = aidl?.first100Students!!
+        students = aidl?.getTop10StudentsBySumA(city) ?: emptyList()
     }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Back to Home") },
+                title = { Text("Back") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -64,32 +65,30 @@ fun ScreenA(navController: NavController, aidl: IMyMySchoolInterface?) {
                 modifier = Modifier.fillMaxWidth()
             )
         },
-
         content = {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 56.dp), // Để tránh bị che bởi TopAppBar
-                contentAlignment = Alignment.Center,
+                    .padding(top = 56.dp),
+                contentAlignment = Alignment.Center
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(top = 30.dp) // Đảm bảo có khoảng cách trên
+                        .padding(top = 30.dp)
                 ) {
                     Box(
                         modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("First 100 Students:", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                        Text("Top Students for $city:", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                     }
 
                     LazyColumn(
                         modifier = Modifier.fillMaxSize()
                     ) {
                         itemsIndexed(students) { _, student ->
-                            // Card hiển thị thông tin của mỗi sinh viên
-                            // Card cho mỗi sinh viên
+                            // Card hiển thị First Name, Last Name, và Score
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -141,4 +140,3 @@ fun ScreenA(navController: NavController, aidl: IMyMySchoolInterface?) {
         )
     }
 }
-

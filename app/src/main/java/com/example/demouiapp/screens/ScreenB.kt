@@ -39,12 +39,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.demouiapp.viewmodel.StudentViewModel
+import com.example.demodatabase.IMyMySchoolInterface
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ScreenB(navController: NavController) {
+fun ScreenB(navController: NavController, aidl: IMyMySchoolInterface?) {
     // Khai báo danh sách các môn học
     val subjects = listOf(
         "Math", "Physics", "Chemistry", "Biology", "Literature",
@@ -125,8 +125,8 @@ fun ScreenB(navController: NavController) {
                     // Thêm Button Search
                     Button(
                         onClick = {
-                            // Điều hướng tới màn hình mới "ScreenBExtra"
-                            navController.navigate("screen_b_extra")
+                            /// Điều hướng tới màn hình mới "ScreenBExtra" và truyền subject vào
+                            navController.navigate("screen_b_detail/$selectedSubject")
                         },
                         modifier = Modifier.fillMaxWidth().padding(16.dp)
                     ) {
