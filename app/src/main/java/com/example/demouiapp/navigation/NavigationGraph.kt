@@ -14,6 +14,7 @@ import com.example.demouiapp.screens.ScreenE
 import com.example.demouiapp.screensdetail.ScreenBDetail
 import com.example.demouiapp.screensdetail.ScreenCDetail
 import com.example.demouiapp.screensdetail.ScreenDDetail
+import com.example.demouiapp.screensdetail.ScreenEDetail
 
 
 //@Composable
@@ -93,7 +94,7 @@ fun NavigationGraph(aidlDB: IMyMySchoolInterface?) {
             // Lấy tham số từ đường dẫn
             val inputFirstName = backStackEntry.arguments?.getString("inputFirstName") ?: "Cuong"
             val inputCity = backStackEntry.arguments?.getString("inputCity") ?: "HCM"
-//            ScreenEDetail(navController, aidlDB, inputFirstName,inputCity)
+            ScreenEDetail(navController, aidlDB, inputFirstName,inputCity)
         }
     }
 }

@@ -30,16 +30,34 @@ class MyUIService : Service() {
         }
     }
 
-    private val binder = object : IClientInterface.Stub(){
+    private val binder = object : IClientInterface.Stub() {
         override fun getFirst100Students(): List<Student> {
             return aidlDatabase?.first100Students?.toList() ?: listOf()
         }
 
-//        override fun getTop10StudentsBySubject(nameSubject: String?): List<Student> {
-//            return listOf()
-//            // TODO
-//        }
+        override fun getTop10StudentsBySubject(nameSubject: String?): List<Student> {
+            return aidlDatabase?.getTop10StudentsBySubject(nameSubject ?: "")?.toList() ?: listOf()
+        }
 
+        override fun getTop10StudentsBySumA(nameCity: String?): List<Student> {
+            return aidlDatabase?.getTop10StudentsBySumA(nameCity ?: "")?.toList() ?: listOf()
+        }
+
+        override fun getTop10StudentsBySumB(nameCity: String?): List<Student> {
+            return aidlDatabase?.getTop10StudentsBySumB(nameCity ?: "")?.toList() ?: listOf()
+        }
+
+        override fun getStudentByPriority(firstName: String?, nameCity: String?): Student {
+            return aidlDatabase?.getStudentByPriority(firstName ?: "", nameCity ?: "") ?: Student(
+                studentID = -1,
+                firstName = "",
+                lastName = "",
+                dateOfBirth = "",
+                city = "",
+                phone = "",
+                subjects = listOf()
+            )
+        }
     }
 
     override fun onBind(intent: Intent): IBinder {

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -75,7 +74,14 @@ fun ScreenC(navController: NavController, aidl: IMyMySchoolInterface?) {
                     Box(
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(text = "City: ", fontSize = 15.sp, fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth().padding(16.dp))
+                        Text(
+                            text = "City: ",
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        )
                     }
 
                     // Dropdown list
@@ -106,7 +112,7 @@ fun ScreenC(navController: NavController, aidl: IMyMySchoolInterface?) {
                         ) {
                             cities.forEach { city ->
                                 DropdownMenuItem(
-                                    text = {Text(city)}, onClick = {
+                                    text = { Text(city) }, onClick = {
                                         selectedCity = city
                                         expanded = false
                                     })
@@ -120,7 +126,9 @@ fun ScreenC(navController: NavController, aidl: IMyMySchoolInterface?) {
                             /// Điều hướng tới màn hình mới "ScreenBExtra" và truyền city vào
                             navController.navigate("screen_c_detail/$selectedCity")
                         },
-                        modifier = Modifier.fillMaxWidth().padding(16.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
                     ) {
                         Text("Search")
                     }

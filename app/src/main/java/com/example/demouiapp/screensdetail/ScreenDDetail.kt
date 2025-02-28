@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,7 +46,7 @@ fun ScreenDDetail(navController: NavController, aidl: IMyMySchoolInterface?, cit
     var openDialog by remember { mutableStateOf(false) }
     var selectedStudent by remember { mutableStateOf<Student?>(null) }
 
-    // Lọc sinh viên theo môn học khi ScreenBDetail được tạo
+    // Lọc sinh viên theo môn học khi ScreenDDetail được tạo
     LaunchedEffect(Unit) {
         students = aidl?.getTop10StudentsBySumB(city) ?: emptyList()
     }
@@ -77,38 +78,56 @@ fun ScreenDDetail(navController: NavController, aidl: IMyMySchoolInterface?, cit
                         .fillMaxSize()
                         .padding(top = 30.dp)
                 ) {
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("Top Students for $city:", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    // Chỉ hiển thị tiêu đề nếu có sinh viên trong danh sách
+                    if (students.isNotEmpty()) {
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                "Top Students for $city:",
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                     }
 
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        itemsIndexed(students) { _, student ->
-                            // Card hiển thị First Name, Last Name, và Score
-                            Card(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(8.dp)
-                                    .clickable {
-                                        selectedStudent = student
-                                        openDialog = true // Mở dialog khi click vào sinh viên
-                                    }
-                            ) {
-                                Column(
+                    // Kiểm tra nếu có sinh viên, nếu không hiển thị thông báo
+                    if (students.isEmpty()) {
+                        Text(
+                            "No students found for city: $city",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Red,
+                            modifier = Modifier.align(Alignment.CenterHorizontally) // Căn giữa
+                        )
+                    } else {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            itemsIndexed(students) { _, student ->
+                                // Card hiển thị First Name, Last Name, và Score
+                                Card(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(16.dp)
+                                        .padding(8.dp)
+                                        .clickable {
+                                            selectedStudent = student
+                                            openDialog = true // Mở dialog khi click vào sinh viên
+                                        }
                                 ) {
-                                    Text("Student ID: ${student.studentID}")
-                                    Text("First Name: ${student.firstName}")
-                                    Text("Last Name: ${student.lastName}")
-                                    Text("Date of Birth: ${student.dateOfBirth}")
-                                    Text("City: ${student.city}")
-                                    Text("Phone: ${student.phone}")
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(16.dp)
+                                    ) {
+                                        Text("Student ID: ${student.studentID}")
+                                        Text("First Name: ${student.firstName}")
+                                        Text("Last Name: ${student.lastName}")
+                                        Text("Date of Birth: ${student.dateOfBirth}")
+                                        Text("City: ${student.city}")
+                                        Text("Phone: ${student.phone}")
+                                    }
                                 }
                             }
                         }

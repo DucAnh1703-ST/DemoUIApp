@@ -8,11 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -70,24 +67,20 @@ fun ScreenE(navController: NavController, aidl: IMyMySchoolInterface?) {
                     TextField(
                         value = userInput1,
                         onValueChange = { userInput1 = it },
-                        label = { Text("Enter Input 1") },
-                        modifier = Modifier.fillMaxWidth().padding(16.dp)
+                        label = { Text("Input name") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
                     )
 
                     TextField(
                         value = userInput2,
                         onValueChange = { userInput2 = it },
-                        label = { Text("Enter Input 2") },
-                        modifier = Modifier.fillMaxWidth().padding(16.dp)
+                        label = { Text("Input city") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
                     )
-
-                    // Dropdown list cho thành phố
-                    Box(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(text = "City: ", fontSize = 15.sp, fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth().padding(16.dp))
-                    }
-
 
                     // Nút Search để điều hướng
                     Button(
@@ -95,7 +88,9 @@ fun ScreenE(navController: NavController, aidl: IMyMySchoolInterface?) {
                             // Điều hướng tới màn hình mới "ScreenDDetail" và truyền dữ liệu vào
                             navController.navigate("screen_e_detail/$userInput1/$userInput2")
                         },
-                        modifier = Modifier.fillMaxWidth().padding(16.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
                     ) {
                         Text("Search")
                     }
