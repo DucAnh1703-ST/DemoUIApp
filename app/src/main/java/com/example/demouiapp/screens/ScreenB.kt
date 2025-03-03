@@ -142,13 +142,6 @@ fun ScreenB(navController: NavController, aidl: IMyMySchoolInterface?) {
     )
 }
 
-//@Preview
-//@Composable
-//fun PreviewScreenB() {
-//    // A mock NavController for preview purposes
-//    val navController = rememberNavController()
-//    ScreenB(navController = navController)
-//}
 
 
 

@@ -15,39 +15,6 @@ import com.example.demouiapp.screensdetail.ScreenBDetail
 import com.example.demouiapp.screensdetail.ScreenCDetail
 import com.example.demouiapp.screensdetail.ScreenDDetail
 import com.example.demouiapp.screensdetail.ScreenEDetail
-
-
-//@Composable
-//fun NavigationGraph(navController: NavHostController, studentViewModel: StudentViewModel) {
-//    NavHost(navController = navController, startDestination = "home") {
-//        composable("home") { HomeScreen(navController) }
-//        composable("screen_a") {
-//            // Khi màn hình ScreenA được mở, gọi hàm để tải 100 sinh viên
-//            LaunchedEffect(Unit) {
-//                studentViewModel.fetchFirst100Students()
-//            }
-//            ScreenA(navController, studentViewModel)
-//        }
-//        composable("screen_b") { ScreenB(navController) }  // Truyền navController vào
-//        composable("screen_c") { ScreenC(navController) }  // Truyền navController vào
-//        composable("screen_d") { ScreenD(navController) }  // Truyền navController vào
-//        composable("screen_e") { ScreenE(navController) }  // Truyền navController vào
-//
-//        // Định nghĩa màn hình mới ScreenBExtra và nhận tham số môn học
-//        composable("screen_b_extra/{subject}") { backStackEntry ->
-//            val subject = backStackEntry.arguments?.getString("subject") ?: ""
-//            ScreenBExtra(navController, studentViewModel, subject)
-//        }
-//
-//        // Định nghĩa màn hình mới ScreenCExtra và nhận tham số môn học
-//        composable("screen_c_extra/{city}") { backStackEntry ->
-//            val city = backStackEntry.arguments?.getString("city") ?: ""
-//            ScreenCExtra(navController, studentViewModel, city)
-//        }
-//    }
-//}
-
-
 @Composable
 fun NavigationGraph(aidlDB: IMyMySchoolInterface?) {
     val navController = rememberNavController()
